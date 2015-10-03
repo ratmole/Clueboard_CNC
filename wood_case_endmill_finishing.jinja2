@@ -1,0 +1,53 @@
+(Clueboard wooden case)
+(2015 Oct 3, Zach White, Clueboard)
+( *** UNPROVEN PROGRAM *** )
+( Origin: Top left of stock )
+( Material: Hardwood )
+( Tool: 1/4" 2 flute straight endmill )
+
+(Defaults:)
+{{gcode_defaults}}
+
+(Start by going to 0,0,{{hover_height}}. Hope you homed the machine first.)
+G0 Z{{hover_height}}
+G0 X0 Y0
+
+(Go to the rough cut position)
+? set box_left_x = box_left_x + roughout_offset
+? set box_right_x = box_right_x - roughout_offset
+? set box_top_y = box_top_y - roughout_offset
+? set box_bottom_y = box_bottom_y + roughout_offset
+G0 X{{box_left_x}} Y{{box_top_y}}
+G1 Z{{case_depth}}
+
+(Do finishing cuts around the edge)
+? for i in range(roughout_offset):
+? set box_left_x = box_left_x + 1
+? set box_right_x = box_right_x - 1
+? set box_top_y = box_top_y - 1
+? set box_bottom_y = box_bottom_y + 1
+G1 X{{box_left_x}} Y{{box_top_y}} F{{tool_speed}}
+G1 X{{box_right_x}} F{{tool_speed}}
+G1 Y{{box_bottom_y}} F{{tool_speed}}
+G1 X{{box_left_x}} F{{tool_speed}}
+G1 Y{{box_top_y}} F{{tool_speed}}
+? endfor
+
+(Route around the edge {{shelf_width}}mm to make room for the plate)
+G1 Z{{shelf_depth}} F{{tool_speed}}
+? for i in range(shelf_width):
+? set box_left_x = box_left_x + 1
+? set box_right_x = box_right_x - 1
+? set box_top_y = box_top_y - 1
+? set box_bottom_y = box_bottom_y + 1
+G1 X{{box_left_x}} Y{{box_top_y}} F{{tool_speed}}
+G1 X{{box_right_x}} F{{tool_speed}}
+G1 Y{{box_bottom_y}} F{{tool_speed}}
+G1 X{{box_left_x}} F{{tool_speed}}
+G1 Y{{box_top_y}} F{{tool_speed}}
+? endfor
+
+(End at the 0,0 for the next board)
+G0 Z{{hover_height}}
+G0 X{{case_width}} Y0 Z{{ending_height}}
+M30

@@ -1,0 +1,35 @@
+(Clueboard wooden case)
+(2015 Oct 3, Zach White, Clueboard)
+( *** UNPROVEN PROGRAM *** )
+( Origin: Top left of stock )
+( Material: Hardwood )
+( Tool: 90 degree V-carve bit )
+
+(Defaults:)
+{{gcode_defaults}}
+
+(Start by going to 0,0,{{hover_height}}. Hope you homed the machine first.)
+G0 Z{{hover_height}}
+G0 X0 Y0
+
+(Draw the line for the left side)
+G1 Z{{edge_depth}}
+G1 Y{{case_height}}
+G1 Z{{hover_height}}
+
+(Draw the box that needs to be cut out)
+G0 X{{box_left_x}} Y{{box_top_y}}
+G1 Z{{bevel_depth}}
+G1 X{{box_right_x}}
+G1 Y{{box_bottom_y}}
+G1 X{{box_top_x}}
+G0 Z{{hover_height}}
+
+(Draw the line for the right side)
+G0 X{{case_width}} Y0
+G1 Z{{edge_depth}}
+G1 Y{{case_height}}
+G1 Z{{hover_height}}
+
+(End at 0,0 for the next board)
+G0 Y0 Z{{ending_height}}

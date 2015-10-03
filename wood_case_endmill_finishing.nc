@@ -1,0 +1,70 @@
+(Clueboard wooden case)
+(2015 Oct 3, Zach White, Clueboard)
+( *** UNPROVEN PROGRAM *** )
+( Origin: Top left of stock )
+( Material: Hardwood )
+( Tool: 1/4" 2 flute straight endmill )
+
+(Defaults:)
+G17 G21 G40 G49 G80 G90 G94 G54
+
+(Start by going to 0,0,5. Hope you homed the machine first.)
+G0 Z5
+G0 X0 Y0
+
+(Go to the rough cut position)
+G0 X20 Y-23.175
+G1 Z-24
+
+(Do finishing cuts around the edge)
+G1 X21 Y-24.175 F60
+G1 X322 F60
+G1 Y-107.175 F60
+G1 X21 F60
+G1 Y-24.175 F60
+G1 X22 Y-25.175 F60
+G1 X321 F60
+G1 Y-106.175 F60
+G1 X22 F60
+G1 Y-25.175 F60
+G1 X23 Y-26.175 F60
+G1 X320 F60
+G1 Y-105.175 F60
+G1 X23 F60
+G1 Y-26.175 F60
+G1 X24 Y-27.175 F60
+G1 X319 F60
+G1 Y-104.175 F60
+G1 X24 F60
+G1 Y-27.175 F60
+G1 X25 Y-28.175 F60
+G1 X318 F60
+G1 Y-103.175 F60
+G1 X25 F60
+G1 Y-28.175 F60
+(Route around the edge 4mm to make room for the plate)
+G1 Z-15 F60
+G1 X21 Y-24.175 F60
+G1 X322 F60
+G1 Y-107.175 F60
+G1 X21 F60
+G1 Y-24.175 F60
+G1 X22 Y-25.175 F60
+G1 X321 F60
+G1 Y-106.175 F60
+G1 X22 F60
+G1 Y-25.175 F60
+G1 X23 Y-26.175 F60
+G1 X320 F60
+G1 Y-105.175 F60
+G1 X23 F60
+G1 Y-26.175 F60
+G1 X24 Y-27.175 F60
+G1 X319 F60
+G1 Y-104.175 F60
+G1 X24 F60
+G1 Y-27.175 F60
+(End at the 0,0 for the next board)
+G0 Z5
+G0 X347 Y0 Z100
+M30
