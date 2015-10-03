@@ -5,8 +5,12 @@ This repository contains scripts and generated g-code for machining keyboard
 cases out of hardwood. You can use these as-is to make Clueboard cases, or
 you can modify the parameters in parse_templates to create a case of your own.
 
-Prerequisites
--------------
+You can run the .nc files unmodified on most CNC's. If you would like to
+change anything you will need to modify the jinja2 template and generate
+the nc files.
+
+Prerequisites for modifying the jinja2 templates
+------------------------------------------------
 * Python 2.7 or later
 * Jinja2 2.8 or later
 
