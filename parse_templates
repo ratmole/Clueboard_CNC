@@ -10,6 +10,7 @@ parser.add_argument('file', nargs='*', help='Template file(s) to parse.')
 parser.add_argument('--tool-width', default=6.35, type=float, help='Width of the tool in MM.')
 args = parser.parse_args()
 
+case_depth = -30
 parameters = {
     # Default parameters for our CNC
     # (G17: xy plane section)
@@ -24,21 +25,21 @@ parameters = {
     'tool_speed': 60,                    # MM/sec
 
     # Case dimensions. Your workpiece must be at least this large.
-    'case_height': -205,                 # How wide your board is. Not precise.
-    'case_width': 347,                   # How long the case is.
-    'case_depth': -24,                   # How thick your board is.
-    'bevel_depth': -3,                   # How deep to cut the vcarved bevel
+    'case_height': -205,                 # How wide your board is. Does not need to be precise.
+    'case_width': 364,                   # How long the case is.
+    'case_depth': case_depth,                   # How thick your board is.
+    'bevel_depth': -4,                   # How deep to cut the vcarved bevel
     'edge_depth': -1,                    # How deep to cut the vcarved line between cases
 
     # Coordinates for the lines in the main cutout
-    'box_left_x': 15,
-    'box_right_x': 328,
-    'box_top_y': -15 - args.tool_width/2,
-    'box_bottom_y': -110 - args.tool_width/2,
+    'box_left_x': 27,
+    'box_right_x': 340,
+    'box_top_y': -27 - args.tool_width/2,
+    'box_bottom_y': -122 - args.tool_width/2,
 
     # Parameters for the shelf the plate rests against
-    'shelf_width': 4,                    # The width of the shelf
-    'shelf_depth': -15,                  # How deep the plate sits in the case
+    'shelf_width': 12,                    # The width of the shelf
+    'shelf_depth': case_depth * .625,     # How deep the plate sits in the case
 
     # Coordinates for the lines on the USB cutout
     'usb_depth': -10,
@@ -48,28 +49,32 @@ parameters = {
     'usb_bottom_y': -15 - args.tool_width/2,
 
     # Parameters for the tabs that hold the center piece in place
-    'tab_height': 3,
+    'tab_height': 4,
     'tab_start': -55,
     'tab_length': 10,
 
     # Parameters we use in calculations
     'tool_width': args.tool_width,
     'tool_offset': args.tool_width / 2,
-    'roughout_offset': 5,                # How much space to leave for the roughout
+    'roughout_offset': 6,                # How much space to leave for the roughout
     'hover_height': 5,                   # A safe height that clears the part
     'ending_height': 100,                # What height to end the program at
+
+    # Stupid helpers
+    'int': int,
 }
 
 if not args.file:
     args.file = glob('*.jinja2')
 
 for file in args.file:
-    filename = '.'.join(file.split('.')[:-1]) + '.nc'
+    filename = '.'.join(file.split('.')[:-1])
     jinja = Environment(trim_blocks=True, lstrip_blocks=True, line_statement_prefix='?', line_comment_prefix='#', autoescape=False, loader=FileSystemLoader('.', followlinks=True))
     template = jinja.get_template(file)
     gcode = template.render(**parameters)
 
-    with open(filename, 'w') as fd:
-        fd.write(gcode)
-        fd.write('\n')
-        print '*** Wrote %s' % filename
+    for extension in ('.nc', '.gcode'):
+        with open(filename + extension, 'w') as fd:
+            fd.write(gcode)
+            fd.write('\n')
+            print '*** Wrote %s' % filename + extension

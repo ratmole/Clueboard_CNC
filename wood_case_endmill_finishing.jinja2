@@ -21,31 +21,33 @@ G0 X{{box_left_x}} Y{{box_top_y}}
 G1 Z{{case_depth}}
 
 (Do finishing cuts around the edge)
-? for i in range(roughout_offset):
-? set box_left_x = box_left_x + 1
-? set box_right_x = box_right_x - 1
-? set box_top_y = box_top_y - 1
-? set box_bottom_y = box_bottom_y + 1
-G1 X{{box_left_x}} Y{{box_top_y}} F{{tool_speed}}
-G1 X{{box_right_x}} F{{tool_speed}}
-G1 Y{{box_bottom_y}} F{{tool_speed}}
-G1 X{{box_left_x}} F{{tool_speed}}
-G1 Y{{box_top_y}} F{{tool_speed}}
+? for i in range(int(roughout_offset / 2)):
+? set box_left_x = box_left_x - 2
+? set box_right_x = box_right_x + 2
+? set box_top_y = box_top_y + 2
+? set box_bottom_y = box_bottom_y - 2
+G1 X{{box_left_x}} Y{{box_top_y}}
+G1 X{{box_right_x}}
+G1 Y{{box_bottom_y}}
+G1 X{{box_left_x}}
+G1 Y{{box_top_y}}
 ? endfor
 
+
 (Route around the edge {{shelf_width}}mm to make room for the plate)
-G1 Z{{shelf_depth}} F{{tool_speed}}
-? for i in range(shelf_width):
-? set box_left_x = box_left_x + 1
-? set box_right_x = box_right_x - 1
-? set box_top_y = box_top_y - 1
-? set box_bottom_y = box_bottom_y + 1
-G1 X{{box_left_x}} Y{{box_top_y}} F{{tool_speed}}
-G1 X{{box_right_x}} F{{tool_speed}}
-G1 Y{{box_bottom_y}} F{{tool_speed}}
-G1 X{{box_left_x}} F{{tool_speed}}
-G1 Y{{box_top_y}} F{{tool_speed}}
+G1 Z{{shelf_depth}}
+? for i in range(int(shelf_width / 2)):
+? set box_left_x = box_left_x - 2
+? set box_right_x = box_right_x + 2
+? set box_top_y = box_top_y + 2
+? set box_bottom_y = box_bottom_y - 2
+G1 X{{box_left_x}} Y{{box_top_y}}
+G1 X{{box_right_x}}
+G1 Y{{box_bottom_y}}
+G1 X{{box_left_x}}
+G1 Y{{box_top_y}}
 ? endfor
+
 
 (End at the 0,0 for the next board)
 G0 Z{{hover_height}}
